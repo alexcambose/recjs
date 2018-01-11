@@ -1,8 +1,10 @@
 import Loop from './Loop';
 
+/** Recorder class */
 class Recorder {
-    constructor (el, events, fps) {
+    constructor (el, document, events, fps) {
         this.el = el;
+        this.document = document;
         this.events = events;
         this.fps = fps;
         this._recording = false;
@@ -47,29 +49,57 @@ class Recorder {
             });
         }
         if (events.indexOf('keypress') !== -1) {
-            document.addEventListener('keypress', e => {
+            this.document.addEventListener('keypress', e => {
                 this._keypress = e.keyCode;
             });
-            document.addEventListener('keydown', e => {
+            this.document.addEventListener('keydown', e => {
                 if (e.keyCode === 8) this._keypress = 8;
             });
         }
         this._loop = new Loop(fps, this._appendFrame.bind(this));
     }
+    /**
+     * Starts recording
+     * @example
+     * recjs.recorder.record()
+     */
     record () {
         this._record();
     }
+    /**
+     * Check if it is recording
+     * @example
+     * recjs.recorder.isRecording()
+     * @returns {boolean} True if it's recording
+     */
     isRecording () {
         return this._recording;
     }
+    /**
+     * Stops recording
+     * @example
+     * recjs.recorder.stop()
+     */
     stop () {
         this.pause();
         this._dataIndex = 0;
     }
+    /**
+     * Pauses current recording
+     * @example
+     * recjs.recorder.pause()
+     */
     pause () {
         this._recording = false;
         this._loop.stop();
     }
+    /**
+     * Returns recorded data
+     * @example
+     * recjs.recorder.getData(true)
+     * @param  {boolean} stringify=false
+     * @returns {(object|string)}
+     */
     getData (stringify = false) {
         if (stringify) return JSON.stringify(this._data);
         return this._data;

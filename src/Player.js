@@ -1,13 +1,24 @@
 import Loop from './Loop';
 
+/** Player class */
 class Player {
-    constructor (el) {
+    constructor (el, document) {
         this.el = el;
+        this.document = document;
         this._dataFrameIndex = 0;
         this._loop = null;
         this._onEnd = null;
         this._previousElementFocused = null;
     }
+    /**
+     * Starts playing a recording
+     * @example
+     * recjs.player.play(recjs.recorder.getData(), () => {
+     *     console.log('Finished playing')
+     * })
+     * @param  {object} data - Recorded data
+     * @param  {function} onEnd - Calls when playing finishes
+     */
     play (data, onEnd) {
         this.data = data;
         this._onEnd = onEnd;
@@ -15,14 +26,30 @@ class Player {
 
         this._loop.start();
     }
+    /**
+     * Pauses playing
+     * @example
+     * recjs.player.pause()
+     */
     pause () {
         this._loop.stop();
     }
+    /**
+     * Stops playing
+     * @example
+     * recjs.player.stop()
+     */
     stop () {
         this.pause();
         this._dataFrameIndex = 0;
         this._renderFrame(); // render once more with the initial frame
     }
+    /**
+     * Sets current frame
+     * @example
+     * recjs.player.setFrameIndex(87)
+     * @param  {number} index - Frame index
+     */
     setFrameIndex (index) {
         if (index < this._dataFrameIndex.length) {
             this._dataFrameIndex = index;
@@ -38,7 +65,7 @@ class Player {
         }
         if (this._dataFrameIndex === 0) { // initialize
             this.el.scrollTop = this.el.scrollLeft = 0;
-            const pointer = document.getElementById('recjs-pointer');
+            const pointer = this.document.getElementById('recjs-pointer');
             if (pointer) pointer.remove();
         }
         const frame = this.data.frames[this._dataFrameIndex];
@@ -62,7 +89,7 @@ class Player {
         const absX = x + this.el.getBoundingClientRect().left;
         const absY = y + this.el.getBoundingClientRect().top;
         // we must get the emene tbehind the recjs-pointer so we do x - 1 and y - 1
-        const element = document.elementFromPoint(absX - 1, absY - 1);
+        const element = this.document.elementFromPoint(absX - 1, absY - 1);
         if (element.tagName.toLowerCase() === 'input') {
             element.focus();
             this._previousElementFocused = element;
@@ -77,9 +104,9 @@ class Player {
     }
     _mouseMove (x, y) {
         this.el.style.position = 'relative';
-        let pointer = document.getElementById('recjs-pointer');
+        let pointer = this.document.getElementById('recjs-pointer');
         if (!pointer) {
-            pointer = document.createElement('div');
+            pointer = this.document.createElement('div');
             pointer.id = 'recjs-pointer';
             pointer.style.position = 'absolute';
             pointer.style.width = '14px';
@@ -103,7 +130,7 @@ class Player {
     }
     _addDot (x, y, className, color) {
         this.el.style.position = 'relative';
-        let dot = document.createElement('recjs');
+        let dot = this.document.createElement('recjs');
         dot.className = className;
         dot.style.position = 'absolute';
         dot.style.width = '10px';

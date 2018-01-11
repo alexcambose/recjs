@@ -9,8 +9,8 @@ const dom = new JSDOM(`<body>
 global.window = dom.window;
 global.document = dom.window.document;
 
-const Recjs = require('../dist/dist.js').default;
-const recjs = new Recjs({
+require('../dist/dist.js');
+const recjs = new window.Recjs({
     el: '#main'
 });
 

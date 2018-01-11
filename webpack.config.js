@@ -4,9 +4,7 @@ module.exports = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'dist.js',
-        library: '',
-        libraryTarget: 'commonjs'
+        filename: 'dist.js'
     },
     devtool: 'source-map',
     module: {
