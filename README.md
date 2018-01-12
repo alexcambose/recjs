@@ -11,7 +11,7 @@ In browser:
 In Node.js
 
 ```bash
-npm install --save recjs
+npm install --save @alexcambose/recjs
 ```
 
 ```javascript
@@ -19,6 +19,7 @@ import Recjs from 'recjs';
 ```
 
 ## Usage
+
 ```html
 ...
 <body>
@@ -27,7 +28,7 @@ import Recjs from 'recjs';
 ...
 ```
 
-#### Example 1
+### Example 1
 
 ```javascript
 const recjs = new Recjs({
@@ -41,7 +42,7 @@ setTimeout(() => {
 }, 3000);
 ```
 
-#### Example 2
+### Example 2
 
 ```javascript
 const recjs = new Recjs({
@@ -55,7 +56,7 @@ setTimeout(() => {
 }, 3000);
 ```
 
-# API Reference
+## API Reference
 
 ## Classes
 
