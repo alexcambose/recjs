@@ -1,4 +1,6 @@
 # recjs
+[![Build Status](https://travis-ci.org/alexcambose/recjs.svg?branch=master)](https://travis-ci.org/alexcambose/recjs)
+
 Lightweight user session recorder based on JSON
 
 ## Installation
