@@ -1,5 +1,5 @@
-import Recjs from './Recjs.js';
+import Recjs from './Recjs.js'
 
-window.Recjs = Recjs;
+window.Recjs = Recjs
 
-export default Recjs;
+export default Recjs

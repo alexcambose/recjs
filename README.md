@@ -1,4 +1,6 @@
 # recjs
+
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 [![Build Status](https://travis-ci.org/alexcambose/recjs.svg?branch=master)](https://travis-ci.org/alexcambose/recjs)
 
 Lightweight user session recorder based on JSON
@@ -65,11 +67,11 @@ setTimeout(() => {
 <dl>
 <dt><a href="#Recjs">Recjs</a></dt>
 <dd></dd>
-<dt><a href="#Player">Player</a></dt>
-<dd><p>Player class</p>
-</dd>
 <dt><a href="#Recorder">Recorder</a></dt>
 <dd><p>Recorder class</p>
+</dd>
+<dt><a href="#Player">Player</a></dt>
+<dd><p>Player class</p>
 </dd>
 </dl>
 
@@ -96,72 +98,6 @@ const recjs = new Recjs({
     events: ['scroll'],
     fps: 60
 });
-```
-<a name="Player"></a>
-
-## Player
-Player class
-
-**Kind**: global class
-
-* [Player](#Player)
-    * [.play(data, onEnd)](#Player+play)
-    * [.pause()](#Player+pause)
-    * [.stop()](#Player+stop)
-    * [.setFrameIndex(index)](#Player+setFrameIndex)
-
-<a name="Player+play"></a>
-
-### player.play(data, onEnd)
-Starts playing a recording
-
-**Kind**: instance method of [<code>Player</code>](#Player)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| data | <code>object</code> | Recorded data |
-| onEnd | <code>function</code> | Calls when playing finishes |
-
-**Example**
-```js
-recjs.player.play(recjs.recorder.getData(), () => {
-    console.log('Finished playing')
-})
-```
-<a name="Player+pause"></a>
-
-### player.pause()
-Pauses playing
-
-**Kind**: instance method of [<code>Player</code>](#Player)
-**Example**
-```js
-recjs.player.pause()
-```
-<a name="Player+stop"></a>
-
-### player.stop()
-Stops playing
-
-**Kind**: instance method of [<code>Player</code>](#Player)
-**Example**
-```js
-recjs.player.stop()
-```
-<a name="Player+setFrameIndex"></a>
-
-### player.setFrameIndex(index)
-Sets current frame
-
-**Kind**: instance method of [<code>Player</code>](#Player)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| index | <code>number</code> | Frame index |
-
-**Example**
-```js
-recjs.player.setFrameIndex(87)
 ```
 <a name="Recorder"></a>
 
@@ -232,4 +168,106 @@ Returns recorded data
 **Example**
 ```js
 recjs.recorder.getData(true)
+```
+<a name="Player"></a>
+
+## Player
+Player class
+
+**Kind**: global class
+
+* [Player](#Player)
+    * [.play(data, onEnd)](#Player+play)
+    * [.pause()](#Player+pause)
+    * [.stop()](#Player+stop)
+    * [.setFrameIndex(index)](#Player+setFrameIndex)
+    * [.currentFrame()](#Player+currentFrame) ⇒ <code>object</code>
+    * [.currentFrameIndex()](#Player+currentFrameIndex) ⇒ <code>number</code>
+    * [.isPlaying()](#Player+isPlaying) ⇒ <code>boolean</code>
+
+<a name="Player+play"></a>
+
+### player.play(data, onEnd)
+Starts playing a recording
+
+**Kind**: instance method of [<code>Player</code>](#Player)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>object</code> | Recorded data |
+| onEnd | <code>function</code> | Calls when playing finishes |
+
+**Example**
+```js
+recjs.player.play(recjs.recorder.getData(), () => {
+    console.log('Finished playing')
+})
+```
+<a name="Player+pause"></a>
+
+### player.pause()
+Pauses playing
+
+**Kind**: instance method of [<code>Player</code>](#Player)
+**Example**
+```js
+recjs.player.pause()
+```
+<a name="Player+stop"></a>
+
+### player.stop()
+Stops playing
+
+**Kind**: instance method of [<code>Player</code>](#Player)
+**Example**
+```js
+recjs.player.stop()
+```
+<a name="Player+setFrameIndex"></a>
+
+### player.setFrameIndex(index)
+Set current frame
+
+**Kind**: instance method of [<code>Player</code>](#Player)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| index | <code>number</code> | Frame index |
+
+**Example**
+```js
+recjs.player.setFrameIndex(87)
+```
+<a name="Player+currentFrame"></a>
+
+### player.currentFrame() ⇒ <code>object</code>
+Get current frame
+
+**Kind**: instance method of [<code>Player</code>](#Player)
+**Returns**: <code>object</code> - Frame object
+**Example**
+```js
+recjs.player.currentFrame()
+```
+<a name="Player+currentFrameIndex"></a>
+
+### player.currentFrameIndex() ⇒ <code>number</code>
+Get current frame index
+
+**Kind**: instance method of [<code>Player</code>](#Player)
+**Returns**: <code>number</code> - Frame index
+**Example**
+```js
+recjs.player.currentFrameIndex()
+```
+<a name="Player+isPlaying"></a>
+
+### player.isPlaying() ⇒ <code>boolean</code>
+Is playing
+
+**Kind**: instance method of [<code>Player</code>](#Player)
+**Returns**: <code>boolean</code> - Returns true if it is playing
+**Example**
+```
+recjs.player.isPlaying()
 ```

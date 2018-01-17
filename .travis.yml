@@ -1,3 +1,7 @@
 language: node_js
 node_js:
+<<<<<<< Updated upstream
   - "8"
+=======
+  - "8"
+>>>>>>> Stashed changes
