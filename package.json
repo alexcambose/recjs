@@ -1,6 +1,6 @@
 {
   "name": "@alexcambose/recjs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Lightweight user session recorder based on JSON",
   "main": "src/index.js",
   "scripts": {
