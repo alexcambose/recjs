@@ -2,12 +2,13 @@ import Loop from './Loop'
 
 /** Recorder class */
 class Recorder {
-  constructor (el, document, events, fps) {
-    this.el = el
+  constructor (document, events, fps) {
+    this.el = document.scrollingElement
     this.document = document
     this.events = events
     this.fps = fps
     this._recording = false
+    this._onRecording = null
     this._data = {
       fps,
       frames: []
@@ -25,27 +26,27 @@ class Recorder {
     this._scrollY = null
     this._keypress = null
     if (events.indexOf('click') !== -1) {
-      el.addEventListener('click', e => {
-        this._clickX = Math.floor(e.clientX - el.getBoundingClientRect().left)
-        this._clickY = Math.floor(e.clientY - el.getBoundingClientRect().top)
+      this.el.addEventListener('click', e => {
+        this._clickX = e.clientX
+        this._clickY = e.clientY
       })
     }
     if (events.indexOf('contextmenu') !== -1) {
-      el.addEventListener('contextmenu', e => {
-        this._contextX = Math.floor(e.clientX - el.getBoundingClientRect().left)
-        this._contextY = Math.floor(e.clientY - el.getBoundingClientRect().top)
+      this.el.addEventListener('contextmenu', e => {
+        this._contextX = e.clientX
+        this._contextY =e.clientY
       })
     }
     if (events.indexOf('mousemove') !== -1) {
-      el.addEventListener('mousemove', e => {
-        this._mouseX = Math.floor(e.clientX - el.getBoundingClientRect().left)
-        this._mouseY = Math.floor(e.clientY - el.getBoundingClientRect().top)
+      this.el.addEventListener('mousemove', e => {
+        this._mouseX = e.clientX
+        this._mouseY = e.clientY
       })
     }
     if (events.indexOf('scroll') !== -1) {
-      el.addEventListener('scroll', e => {
-        this._scrollX = el.scrollLeft
-        this._scrollY = el.scrollTop
+      this.document.addEventListener('scroll', e => {
+        this._scrollX = this.el.scrollLeft
+        this._scrollY = this.el.scrollTop
       })
     }
     if (events.indexOf('keypress') !== -1) {
@@ -60,10 +61,14 @@ class Recorder {
   }
   /**
      * Starts recording
+     * @param  {function} [$0.onRecording] Calls each recorded frame
      * @example
-     * recjs.recorder.record()
+     * recjs.recorder.record({
+     *    onRecording: () => console.log('Next frame')
+     * })
      */
-  record () {
+  record ({ onRecording }) {
+    this._onRecording = onRecording;    
     this._record()
   }
   /**
@@ -135,6 +140,7 @@ class Recorder {
       this._keypress = null
     }
     this._data.frames.push(newFrame)
+    if(this._onRecording) this._onRecording();
   }
 }
 

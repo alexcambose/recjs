@@ -35,9 +35,7 @@ import Recjs from 'recjs';
 ### Example 1
 
 ```javascript
-const recjs = new Recjs({
-    el: '#someElement',
-});
+const recjs = new Recjs();
 recjs.recorder.record(); // starts recording
 
 setTimeout(() => {
@@ -49,9 +47,7 @@ setTimeout(() => {
 ### Example 2
 
 ```javascript
-const recjs = new Recjs({
-    el: '#someElement',
-});
+const recjs = new Recjs();
 recjs.recorder.record(); // starts recording
 
 setTimeout(() => {
@@ -86,7 +82,6 @@ setTimeout(() => {
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | $0 | <code>Object</code> |  |  |
-| $0.el | <code>string</code> |  | Target element that is going to be recorded |
 | [$0.events] | <code>array</code> | <code>[&#x27;scroll&#x27;, &#x27;mousemove&#x27;, &#x27;keypress&#x27;, &#x27;click&#x27;, &#x27;contextmenu&#x27;]</code> | User events that will be recorded |
 | [$0.fps] | <code>integer</code> | <code>30</code> | Number of frames per second |
 | [$0.document] | <code>object</code> | <code>window.document</code> | Document object to be used. (in case of an iframe) |
@@ -94,7 +89,6 @@ setTimeout(() => {
 **Example**
 ```js
 const recjs = new Recjs({
-    el: '#someElement',
     events: ['scroll'],
     fps: 60
 });
@@ -119,9 +113,16 @@ Recorder class
 Starts recording
 
 **Kind**: instance method of [<code>Recorder</code>](#Recorder)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [$0.onRecording] | <code>function</code> | Calls each recorded frame |
+
 **Example**
 ```js
-recjs.recorder.record()
+recjs.recorder.record({
+   onRecording: () => console.log('Next frame')
+})
 ```
 <a name="Recorder+isRecording"></a>
 
@@ -177,7 +178,7 @@ Player class
 **Kind**: global class
 
 * [Player](#Player)
-    * [.play(data, onEnd)](#Player+play)
+    * [.play(data)](#Player+play)
     * [.pause()](#Player+pause)
     * [.stop()](#Player+stop)
     * [.setFrameIndex(index)](#Player+setFrameIndex)
@@ -187,7 +188,7 @@ Player class
 
 <a name="Player+play"></a>
 
-### player.play(data, onEnd)
+### player.play(data)
 Starts playing a recording
 
 **Kind**: instance method of [<code>Player</code>](#Player)
@@ -195,12 +196,14 @@ Starts playing a recording
 | Param | Type | Description |
 | --- | --- | --- |
 | data | <code>object</code> | Recorded data |
-| onEnd | <code>function</code> | Calls when playing finishes |
+| [$0.onPlaying] | <code>function</code> | Calls when playing finishes |
+| [$0.onEnd] | <code>function</code> | Calls each frame |
 
 **Example**
 ```js
-recjs.player.play(recjs.recorder.getData(), () => {
-    console.log('Finished playing')
+recjs.player.play(recjs.recorder.getData(), {
+   onEnd: () => console.log('Finished playing'),
+   onPlaying: () => console.log('Next frame')
 })
 ```
 <a name="Player+pause"></a>
@@ -268,6 +271,6 @@ Is playing
 **Kind**: instance method of [<code>Player</code>](#Player)
 **Returns**: <code>boolean</code> - Returns true if it is playing
 **Example**
-```
+```js
 recjs.player.isPlaying()
 ```
